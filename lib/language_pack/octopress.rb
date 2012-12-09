@@ -20,7 +20,7 @@ class LanguagePack::Octopress < LanguagePack::Jekyll
 
   def generate_jekyll_site
     topic("Building Jekyll site")
-    if File.read(".slugignore") =~ /plugins|sass|source/
+    if File.exists?(".slugignore") and File.read(".slugignore") =~ /plugins|sass|source/
       error ".slugignore contains #{$&}. Jekyll generation will fail."
     end
     pipe("env PATH=$PATH bundle exec rake generate 2>&1")
