@@ -223,14 +223,16 @@ ERROR
         ruby_vm = ruby_version_rbx? ? "rbx" : "ruby"
         run("curl #{VENDOR_URL}/#{ruby_version.sub(ruby_vm, "#{ruby_vm}-build")}.tgz -s -o - | tar zxf -")
       end
-      error invalid_ruby_version_message unless $?.success?
+      error invalid_ruby_version_message + ':1' unless $?.success?
     end
 
     FileUtils.mkdir_p(slug_vendor_ruby)
     Dir.chdir(slug_vendor_ruby) do
+      p VENDOR_URL
+      p ruby_version
       run("curl #{VENDOR_URL}/#{ruby_version}.tgz -s -o - | tar zxf -")
     end
-    error invalid_ruby_version_message unless $?.success?
+    error invalid_ruby_version_message + ':2' unless $?.success?
 
     bin_dir = "bin"
     FileUtils.mkdir_p bin_dir
